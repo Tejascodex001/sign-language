@@ -1,7 +1,7 @@
 import pyttsx3
 
-# Function to convert text file to speech
-def text_to_speech(file_path):
+# Function to convert text file to speech and save it as an MP3
+def text_to_speech(file_path, output_file):
     try:
         # Read the contents of the text file
         with open(file_path, 'r') as file:
@@ -20,11 +20,11 @@ def text_to_speech(file_path):
         engine.setProperty('rate', 125)  # Speed of speech
         engine.setProperty('volume', 1.0)  # Volume (0.0 to 1.0)
 
-        # Speak the text
-        print("Converting text to speech...")
-        engine.say(text)
+        # Save the speech to an MP3 file
+        print("Saving the speech to an MP3 file...")
+        engine.save_to_file(text, output_file)
         engine.runAndWait()
-        print("Text-to-speech conversion completed.")
+        print(f"Text-to-speech conversion completed. Saved as '{output_file}'.")
 
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' does not exist.")
@@ -33,4 +33,5 @@ def text_to_speech(file_path):
 
 if __name__ == "__main__":
     file_path = "detected_letters.txt"  # File containing the detected letters
-    text_to_speech(file_path)
+    output_file = "output.mp3"  # Output MP3 file name
+    text_to_speech(file_path, output_file)
