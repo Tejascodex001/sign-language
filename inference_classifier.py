@@ -106,7 +106,6 @@ while True:
 
     # Display instructions for starting/stopping detection
     cv2.putText(frame, f"Press 's' to start/stop detection", (30, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, f"Press 'n' to detect next letter", (30, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('frame', frame)
 
@@ -120,12 +119,15 @@ while True:
             print("Detection Started")
         else:
             print("Detection Stopped")
+
+    if key == ord(' '):
+         if detection_started:
+            detected_letters += ' '
+            print("Space added")
+
     
-    if key == ord('n') and detection_started:  # Detect next letter when 'n' is pressed
-        # Only detect next letter if the hand is detected
-        letter_detected = False  # Allow the next letter detection
+    
 
-    last_detection_time = current_time  # Update the time of last detection
-
-cap.release()
-cv2.destroyAllWindows()
+if key == ord('q'):
+    cap.release()
+    cv2.destroyAllWindows()
