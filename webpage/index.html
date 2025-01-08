@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Camera Interface</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Camera Detection System</h1>
+        
+        <div class="main-content">
+            <div class="camera-container">
+                <div class="video-wrapper">
+                    <img id="video-feed" src="http://127.0.0.1:8000/video_feed" width="320" height="240" alt="check your camera nigger">
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <h2>Camera Controls</h2>
+                    <div class="button-group">
+                        <button class="btn primary" id="start-camera">Start Camera</button>
+                        <button class="btn danger" id="stop-camera">Stop Camera</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h2>Detection Controls</h2>
+                    <div class="button-group">
+                        <button class="btn success" id="start-detection">Start Detection</button>
+                        <button class="btn warning" id="stop-detection">Stop Detection</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h2>Output Controls</h2>
+                    <div class="button-group">
+                        <button class="btn info" id="save-text">Save Text</button>
+                        <button class="btn secondary" id="convert-to-audio">Convert to Audio</button>
+                        <button class="btn danger" id="clear-text">Clear</button>
+                    </div>
+                </div>
+                
+                <div class="audio-player">
+                    <audio id="audio-player" controls>
+                        <source id="audio-source" src="output.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

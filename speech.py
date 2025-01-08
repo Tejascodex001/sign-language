@@ -33,5 +33,5 @@ def text_to_speech(file_path, output_file):
 
 if __name__ == "__main__":
     file_path = "detected_letters.txt"  # File containing the detected letters
-    output_file = "output.mp3"  # Output MP3 file name
+    output_file = "webpage/output.mp3"  # Output MP3 file name
     text_to_speech(file_path, output_file)

@@ -8,8 +8,7 @@ import time
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
 
-# Initialize video capture and Mediapipe Hand solution
-cap = cv2.VideoCapture(0)
+# Initialize Mediapipe Hand solution
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -34,15 +33,58 @@ letter_detected = False  # Flag to ensure only one letter is detected per click
 
 # Flag to control when detection starts/stops
 detection_started = False
+camera_started = False
+cap = None
 
-while True:
+def start_camera():
+    global camera_started, cap
+    if not camera_started:
+        cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            print("Error: Could not open camera.")
+            return
+        camera_started = True
+        print("Camera Started")
+    else:
+        print("Camera is already running.")
+
+def stop_camera():
+    global camera_started, cap
+    if camera_started:
+        cap.release()
+        cv2.destroyAllWindows()
+        camera_started = False
+        print("Camera Stopped")
+    else:
+        print("Camera is not running.")
+
+def start_detection():
+    global detection_started
+    if not detection_started:
+        detection_started = True
+        print("Detection Started")
+
+def stop_detection():
+    global detection_started
+    if detection_started:
+        detection_started = False
+        print("Detection Stopped")
+
+def save_text():
+    global detected_letters
+    with open("detected_letters.txt", "w") as file:
+        file.write(detected_letters)
+    print("Detected letters saved to detected_letters.txt")
+
+def clear_text():
+    global detected_letters
+    detected_letters = ""
+
+def process_frame(frame):
+    global detection_started, letter_detected, detected_letters
     data_aux = []
     x_ = []
     y_ = []
-
-    ret, frame = cap.read()
-    if not ret:
-        break
 
     H, W, _ = frame.shape
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -92,47 +134,15 @@ while True:
     else:
         # If no hand is detected, don't add any letter
         letter_detected = False  # Reset the letter detection flag
-
-    # Display the predicted letter on the screen with color
-    # Choose a color for the predicted letter (e.g., green color for the letter)
-    color = (0, 255, 0)  # Green color for the predicted letter (BGR format)
     
     # Display the predicted letter in color
-    cv2.putText(frame, f"Predicted Letter: {predicted_character if predicted_character else 'None'}", 
-                (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
+    cv2.putText(frame, f"Letter detected: {predicted_character if predicted_character else 'None'}", 
+                (30, 50), cv2.FONT_HERSHEY_TRIPLEX, 1, (0,255,0), 2, cv2.LINE_AA)
     
     # Display the detected letters
-    cv2.putText(frame, f"Detected Letters: {detected_letters}", (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, f"Saved letters: {detected_letters}", (30, 100), cv2.FONT_HERSHEY_TRIPLEX, 1, (0,0,0), 2, cv2.LINE_AA)
 
     # Display instructions for starting/stopping detection
-    cv2.putText(frame, f"Press 's' to start/stop detection", (30, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+    #cv2.putText(frame, f"Press 's' to start/stop detection", (30, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
-    cv2.imshow('frame', frame)
-
-    # Handle key press events
-    key = cv2.waitKey(1) & 0xFF
-    if key == ord('q'):
-        break
-    if key == ord('s'):  # Start/stop detection when 's' is pressed
-        detection_started = not detection_started  # Toggle the detection state
-        if detection_started:
-            print("Detection Started")
-        else:
-            print("Detection Stopped")
-
-    if key == ord(' '):
-         if detection_started:
-            detected_letters += ' '
-            print("Space added")
-
-    if key == ord('`'):
-         with open("detected_letters.txt", "w") as file:
-            file.write(detected_letters)
-         print("Detected letters saved to detected_letters.txt")
-
-    
-    
-
-if key == ord('q'):
-    cap.release()
-    cv2.destroyAllWindows()
+    return frame
