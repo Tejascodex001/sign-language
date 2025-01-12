@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score
+from collections import Counter
 
 # Load the dataset
 data_dict = pickle.load(open('./data.pickle', 'rb'))
@@ -14,10 +15,8 @@ expected_length = 84
 data = []
 for i, sample in enumerate(data_raw):
     if len(sample) < expected_length:
-        # Pad with zeros if too short
         sample = sample + [0] * (expected_length - len(sample))
     elif len(sample) > expected_length:
-        # Truncate if too long
         sample = sample[:expected_length]
     data.append(sample)
 
@@ -27,9 +26,28 @@ data = np.asarray(data)
 # Ensure labels match the filtered data
 labels = labels[:len(data)]
 
+# Check class distribution
+class_counts = Counter(labels)
+print("Class distribution before filtering:", class_counts)
+
+# Filter out classes with fewer than 2 samples
+filtered_data = []
+filtered_labels = []
+for i, label in enumerate(labels):
+    if class_counts[label] > 1:
+        filtered_data.append(data[i])
+        filtered_labels.append(label)
+
+filtered_data = np.asarray(filtered_data)
+filtered_labels = np.asarray(filtered_labels)
+
+# Check class distribution after filtering
+class_counts = Counter(filtered_labels)
+print("Class distribution after filtering:", class_counts)
+
 # Split data into training and testing sets
 x_train, x_test, y_train, y_test = train_test_split(
-    data, labels, test_size=0.2, shuffle=True, stratify=labels
+    filtered_data, filtered_labels, test_size=0.2, shuffle=True, stratify=filtered_labels
 )
 
 # Define the parameter grid for hyperparameter tuning
