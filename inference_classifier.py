@@ -12,7 +12,7 @@ model = model_dict['model']
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
-hands = mp_hands.Hands(static_image_mode=False, min_detection_confidence=0.3)
+hands = mp_hands.Hands(static_image_mode=False, min_detection_confidence=0.6)
 
 # Label dictionary
 labels_dict = {
@@ -79,6 +79,10 @@ def save_text():
 def clear_text():
     global detected_letters
     detected_letters = ""
+
+def add_space():
+    global detected_letters
+    detected_letters += " "
 
 def process_frame(frame):
     global detection_started, letter_detected, detected_letters

@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             console.log('Text converted to audio:', data);
-            document.getElementById('audio-source').src = 'http://127.0.0.1:8000/get-audio';
+            document.getElementById('audio-source').src = 'http://127.0.0.1:8000/get-audio?' + new Date().getTime();
             document.getElementById('audio-player').load();
             document.getElementById('audio-player').play();
         })

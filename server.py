@@ -54,6 +54,11 @@ def clear_text_route():
     inference_classifier.clear_text()
     return jsonify({'output': 'Text Cleared'})
 
+@app.route('/add-space', methods=['POST'])
+def add_space():
+    inference_classifier.add_space()
+    return jsonify({'output': 'Space Added'})
+
 def generate_frames():
     while True:
         if inference_classifier.cap is None or not inference_classifier.cap.isOpened():
