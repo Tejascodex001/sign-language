@@ -22,24 +22,24 @@ This project enables gesture recognition via webcam, model training, and deploym
 
 1. **Clone the repository**
 
-\`\`\`bash
+```bash
 git clone https://github.com/Tejascodex001/sign.git
 cd sign
-\`\`\`
+```
 
 2. **Create & activate a virtual environment** (recommended)
 
-\`\`\`bash
+```bash
 python -m venv venv
 source venv/bin/activate   # Linux / Mac
 venv\Scripts\activate      # Windows
-\`\`\`
+```
 
 3. **Install dependencies**
 
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 ---
 
@@ -49,9 +49,9 @@ pip install -r requirements.txt
 
 Capture gesture images using webcam:
 
-\`\`\`bash
+```bash
 python collect_imgs.py
-\`\`\`
+```
 
 ⚠️ Keep camera distance consistent for all samples.
 
@@ -61,9 +61,9 @@ python collect_imgs.py
 
 Organize images into a dataset for training:
 
-\`\`\`bash
+```bash
 python create_dataset.py
-\`\`\`
+```
 
 ---
 
@@ -71,9 +71,9 @@ python create_dataset.py
 
 Train a sign language classifier:
 
-\`\`\`bash
+```bash
 python train_classifier.py
-\`\`\`
+```
 
 ---
 
@@ -81,9 +81,9 @@ python train_classifier.py
 
 Test your model in real time:
 
-\`\`\`bash
+```bash
 python inference_classifier.py
-\`\`\`
+```
 
 ---
 
@@ -91,9 +91,9 @@ python inference_classifier.py
 
 Start server and open \`http://localhost:5000\`:
 
-\`\`\`bash
+```bash
 python server.py
-\`\`\`
+```
 
 ---
 
@@ -101,16 +101,16 @@ python server.py
 
 The project generates:
 
-* \`accuracy_score.png\` – Accuracy visualization
-* \`classification_report.png\` – Precision, Recall, F1
-* \`confusion_matrix.png\` – Class-wise performance
-* \`lime_explanation.png\`, \`shap_summary_plot.png\` – Model interpretability
+* `accuracy_score.png` – Accuracy visualization
+* `classification_report.png` – Precision, Recall, F1
+* `confusion_matrix.png` – Class-wise performance
+* `lime_explanation.png`, `shap_summary_plot.png` – Model interpretability
 
 ---
 
 ## 📂 Repository Structure
 
-\`\`\`bash
+```bash
 sign/
 │── collect_imgs.py          # Capture images via webcam
 │── create_dataset.py        # Build dataset
@@ -125,7 +125,7 @@ sign/
 │── data.pickle              # Stored dataset
 │── detected_letters.txt     # Predictions log
 │── *.png                    # Metrics visualizations
-\`\`\`
+```
 
 ---
 
