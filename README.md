@@ -110,7 +110,7 @@ The project generates:
 
 ## 📂 Repository Structure
 
-\`\`\`
+\`\`\`bash
 sign/
 │── collect_imgs.py          # Capture images via webcam
 │── create_dataset.py        # Build dataset
