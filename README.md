@@ -23,8 +23,8 @@ This project enables gesture recognition via webcam, model training, and deploym
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/Tejascodex001/sign.git
-cd sign
+git clone https://github.com/Tejascodex001/sign-language.git
+cd sign-language
 ```
 
 2. **Create & activate a virtual environment** (recommended)
